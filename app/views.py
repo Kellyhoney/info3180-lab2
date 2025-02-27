@@ -1,10 +1,38 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash
+from datetime import datetime
+
+
+
+def format_date_joined(date):
+    return date.strftime('%b, %Y')
 
 
 ###
 # Routing for your application.
-###
+### 
+
+
+
+@app.route('/profile')
+def profile():
+    """Render the profile page."""
+    join_date = datetime.strptime("2023-09-01", "%Y-%m-%d")  # Convert string to datetime object
+    user_info = {
+        "name": "Shantay Kellyman",
+        "username": "@shantayk",
+        "location": "Kingston, Jamaica", 
+        "join_date": format_date_joined(join_date),
+        "bio": "I am a creative individual passionate about marketing and web development. I enjoy learning new skills, dancing, and going to the movies.",
+        "posts": 25,
+        "followers": 120,
+        "following": 80,
+        "profile_pic": url_for('static', filename='images/profile.jpeg')  
+    }
+    return render_template("profile.html", user=user_info)
+
+
+
 
 @app.route('/')
 def home():
@@ -15,7 +43,7 @@ def home():
 @app.route('/about/')
 def about():
     """Render the website's about page."""
-    return render_template('about.html', name="Mary Jane")
+    return render_template('about.html', name="Shantay Kellyman")
 
 
 ###
